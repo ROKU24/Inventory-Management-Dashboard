@@ -1,4 +1,4 @@
-// src/components/Dashboard.jsx
+// src/components/Dashboard.jsx - Updated for better mobile responsiveness
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductTable from './ProductTable';
@@ -82,12 +82,15 @@ const Dashboard = () => {
       <FilterSection />
       
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-        <div className="p-4 flex justify-between items-center border-b border-gray-200">
-          <div className="flex items-center">
+        {/* Header section with better mobile responsiveness */}
+        <div className="p-4 flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-200">
+          <div className="flex items-center mb-4 sm:mb-0">
             <h2 className="text-lg font-medium text-gray-900 mr-4">Product Inventory</h2>
             <CurrencySelector />
           </div>
-          <div className="flex space-x-2">
+          
+          {/* Action buttons with improved mobile layout */}
+          <div className="flex flex-wrap gap-2">
             {selectedProducts.length > 0 && (
               <button
                 onClick={handleBatchDeleteClick}
