@@ -1,3 +1,4 @@
+// src/components/ProductTable.jsx
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toggleSelectProduct, selectAllProducts, clearSelectedProducts } from '../store/productSlice';
@@ -24,13 +25,18 @@ const ProductTable = ({ onEditProduct, onDeleteProduct }) => {
       return false;
     }
     
+    // Special case for out of stock filter
+    if (search === 'outofstock:true') {
+      return product.stockQuantity <= 0;
+    }
+    
     // In-stock filter
     if (inStockOnly && product.stockQuantity <= 0) {
       return false;
     }
     
     // Search filter
-    if (search && !product.name.toLowerCase().includes(search.toLowerCase())) {
+    if (search && search !== 'outofstock:true' && !product.name.toLowerCase().includes(search.toLowerCase())) {
       return false;
     }
     
@@ -168,7 +174,11 @@ const ProductTable = ({ onEditProduct, onDeleteProduct }) => {
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    product.stockQuantity <= 10 ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                    product.stockQuantity <= 0 
+                      ? 'bg-red-100 text-red-800' 
+                      : product.stockQuantity <= 10 
+                        ? 'bg-amber-100 text-amber-800' 
+                        : 'bg-green-100 text-green-800'
                   }`}>
                     {product.stockQuantity}
                   </span>
