@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background -->
+  <rect width="32" height="32" rx="6" fill="#000000" />
+  
+  <!-- Simple box with checkmark -->
+  <rect x="8" y="8" width="16" height="16" rx="2" fill="none" stroke="#00FFAA" stroke-width="2" />
+  
+  <!-- Three horizontal bars inside the box (inventory items) -->
+  <rect x="10" y="12" width="12" height="2" rx="1" fill="#00FFAA" />
+  <rect x="10" y="16" width="12" height="2" rx="1" fill="#00FFAA" />
+  <rect x="10" y="20" width="12" height="2" rx="1" fill="#00FFAA" />
+  
+  <!-- Check mark overlay -->
+  <path d="M20 14 L22 16 L26 12" stroke="#FF3366" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+</svg>
