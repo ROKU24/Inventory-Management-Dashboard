@@ -1,3 +1,4 @@
+// src/components/Dashboard.jsx
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import ProductTable from './ProductTable';
@@ -5,6 +6,7 @@ import FilterSection from './FilterSection';
 import ProductForm from './ProductForm';
 import ConfirmationDialog from './ConfirmationDialog';
 import CategoryChart from './CategoryChart';
+import ExportButton from './ExportButton';
 import { deleteProduct, deleteMultipleProducts, clearSelectedProducts, resetToInitialProducts } from '../store/productSlice';
 import { resetFilters } from '../store/filterSlice';
 
@@ -90,6 +92,7 @@ const Dashboard = () => {
                 Delete Selected ({selectedProducts.length})
               </button>
             )}
+            <ExportButton />
             <button
               onClick={handleAddNewClick}
               className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
