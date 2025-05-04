@@ -1,3 +1,4 @@
+// src/components/ProductForm.jsx
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addProduct, updateProduct } from '../store/productSlice';
@@ -6,6 +7,7 @@ import { XIcon } from '@heroicons/react/solid';
 const ProductForm = ({ product, isOpen, onClose }) => {
   const dispatch = useDispatch();
   const { products } = useSelector((state) => state.products);
+  const { symbol } = useSelector((state) => state.currency);
   
   // Extract unique categories from products for the dropdown
   const categories = [...new Set(products.map(p => p.category))];
@@ -207,7 +209,7 @@ const ProductForm = ({ product, isOpen, onClose }) => {
             
             <div>
               <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                Price ($)
+                Price ({symbol})
               </label>
               <input
                 type="number"

@@ -13,6 +13,7 @@ const ExportButton = () => {
     sortField,
     sortDirection 
   } = useSelector((state) => state.filters);
+  const { symbol, code, name } = useSelector((state) => state.currency);
 
   // Function to get filtered products based on current filters
   const getFilteredProducts = () => {
@@ -68,9 +69,27 @@ const ExportButton = () => {
     return filteredProducts;
   };
 
+  // Function to get currency symbol that works in PDF
+  const getCurrencySymbol = (currencyCode, originalSymbol) => {
+    // Special handling for currencies with Unicode symbols that might not render properly
+    switch(currencyCode) {
+      case 'INR':
+        return 'Rs.'; // Use 'Rs.' instead of '₹' for Indian Rupee
+      case 'JPY':
+        return '¥'; // Japanese Yen
+      case 'CNY':
+        return 'CN¥'; // Use 'CN¥' for Chinese Yuan to differentiate
+      default:
+        return originalSymbol;
+    }
+  };
+
   const generatePDF = async () => {
     // Get filtered products
     const filteredProducts = getFilteredProducts();
+    
+    // Get PDF-safe currency symbol
+    const pdfCurrencySymbol = getCurrencySymbol(code, symbol);
     
     // Show loading indicator
     const loadingToast = document.createElement('div');
@@ -96,6 +115,10 @@ const ExportButton = () => {
       doc.setFontSize(12);
       doc.setTextColor(0, 0, 0);
       let yPos = 40;
+      
+      // Add currency information
+      doc.text(`Currency: ${code} (${pdfCurrencySymbol}) - ${name}`, 20, yPos);
+      yPos += 8;
       
       // Show which filters are active
       if (search === 'outofstock:true') {
@@ -188,7 +211,8 @@ const ExportButton = () => {
           doc.text(product.stockQuantity.toString(), 140, yPos + 5);
         }
         
-        doc.text(`$${product.price.toFixed(2)}`, 160, yPos + 5);
+        // Use the PDF-safe currency symbol for price
+        doc.text(`${pdfCurrencySymbol}${product.price.toFixed(2)}`, 160, yPos + 5);
         
         yPos += 8;
       }
@@ -236,6 +260,9 @@ const ExportButton = () => {
       } else if (inStockOnly) {
         filename += '-instock';
       }
+      
+      // Add currency code to filename
+      filename += `-${code.toLowerCase()}`;
       
       // Save the PDF
       doc.save(`${filename}.pdf`);

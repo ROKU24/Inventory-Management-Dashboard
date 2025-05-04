@@ -7,6 +7,7 @@ import ProductForm from './ProductForm';
 import ConfirmationDialog from './ConfirmationDialog';
 import CategoryChart from './CategoryChart';
 import ExportButton from './ExportButton';
+import CurrencySelector from './CurrencySelector';
 import { deleteProduct, deleteMultipleProducts, clearSelectedProducts, resetToInitialProducts } from '../store/productSlice';
 import { resetFilters } from '../store/filterSlice';
 
@@ -82,7 +83,10 @@ const Dashboard = () => {
       
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="p-4 flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-lg font-medium text-gray-900">Product Inventory</h2>
+          <div className="flex items-center">
+            <h2 className="text-lg font-medium text-gray-900 mr-4">Product Inventory</h2>
+            <CurrencySelector />
+          </div>
           <div className="flex space-x-2">
             {selectedProducts.length > 0 && (
               <button

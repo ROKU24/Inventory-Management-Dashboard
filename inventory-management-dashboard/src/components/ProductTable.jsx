@@ -17,6 +17,7 @@ const ProductTable = ({ onEditProduct, onDeleteProduct }) => {
     currentPage, 
     itemsPerPage 
   } = useSelector((state) => state.filters);
+  const { symbol } = useSelector((state) => state.currency);
 
   // Filter products based on current filters
   const filteredProducts = products.filter((product) => {
@@ -184,7 +185,7 @@ const ProductTable = ({ onEditProduct, onDeleteProduct }) => {
                   </span>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  ${product.price.toFixed(2)}
+                  {symbol}{product.price.toFixed(2)}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   <div className="flex space-x-2">
